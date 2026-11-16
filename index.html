@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quilombo da Matemática - Fase 1</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #2b1a0e; color: #fff3e0; margin: 0; padding: 20px; text-align: center; }
+  .caixa { max-width: 640px; margin: auto; background: #4e2f17; padding: 24px; border-radius: 16px; }
+  h1, h2 { color: #ffb300; }
+  button { background: #ffb300; border: none; padding: 12px 20px; margin: 6px; border-radius: 10px; font-size: 16px; cursor: pointer; }
+  input { padding: 10px; font-size: 18px; border-radius: 8px; border: none; width: 120px; text-align: center; }
+  .estrelas { font-size: 28px; margin-top: 10px; }
+  .tabuleiro { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 16px 0; }
+  .cova { background: #2b1a0e; border-radius: 50%; padding: 10px; font-size: 18px; border: 2px solid #ffb300; }
+</style>
+</head>
+<body>
+<div class="caixa" id="jogo"></div>
+<script>
+const fase = {
+  titulo: "Fase 1 (6º ano) - Mancala",
+  texto: "O Mancala é um dos jogos mais antigos do mundo, jogado há muitos séculos em várias regiões da África. O tabuleiro tem covas e sementes, e quem joga precisa contar, dividir e planejar. Cada jogada é um pequeno problema de matemática. Vamos jogar?",
+  perguntas: [
+    { p: "Um tabuleiro de Mancala tem 2 fileiras com 6 covas cada. Quantas covas tem o tabuleiro todo?", r: 12 },
+    { p: "No começo do jogo, cada cova tem 4 sementes. Quantas sementes há no tabuleiro todo?", r: 48 },
+    { p: "Um jogador pega 7 sementes de uma cova e coloca uma em cada cova seguinte. Quantas covas recebem sementes?", r: 7 },
+    { p: "As 48 sementes são divididas igualmente entre 2 jogadores. Quantas sementes fica para cada um?", r: 24 },
+    { p: "Um jogador tem 24 sementes e guarda 1/4 delas num depósito. Quantas sementes ele guarda?", r: 6 },
+    { p: "Desafio: se cada cova tem 4 sementes e o jogador esvazia 3 covas, quantas sementes ele tem na mão?", r: 12 }
+  ]
+};
+let atual = -1, estrelas = 0;
+const jogo = document.getElementById("jogo");
+
+function tabuleiro() {
+  let covas = "";
+  for (let i = 0; i < 12; i++) covas += '<div class="cova">4</div>';
+  return '<div class="tabuleiro">' + covas + '</div>';
+}
+function inicio() {
+  jogo.innerHTML = '<h1>Quilombo da Matemática</h1><h2>' + fase.titulo + '</h2><p>' + fase.texto + '</p>' + tabuleiro() + '<button onclick="proxima()">Começar</button>';
+}
+function proxima() {
+  atual++;
+  if (atual >= fase.perguntas.length) return fim();
+  jogo.innerHTML = '<h2>Pergunta ' + (atual + 1) + ' de ' + fase.perguntas.length + '</h2>' + tabuleiro() + '<p>' + fase.perguntas[atual].p + '</p><input type="number" id="resp"><br><br><button onclick="conferir()">Responder</button><div class="estrelas">' + '⭐'.repeat(estrelas) + '</div>';
+}
+function conferir() {
+  const v = Number(document.getElementById("resp").value);
+  if (v === fase.perguntas[atual].r) { estrelas++; alert("Acertou! ⭐"); }
+  else { alert("Quase! A resposta era " + fase.perguntas[atual].r); }
+  proxima();
+}
+function fim() {
+  const passou = estrelas >= 3;
+  jogo.innerHTML = '<h1>Fim da fase</h1><div class="estrelas">' + '⭐'.repeat(estrelas) + '</div><p>' + (passou ? "Parabéns! Você avançou no quilombo!" : "Tente de novo para avançar.") + '</p><button onclick="atual=-1;estrelas=0;inicio()">Jogar de novo</button>';
+}
+inicio();
+</script>
+</body>
+</html>
