@@ -1,62 +1,182 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quilombo da Matemática - Fase 1</title>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quilombo da Matemática</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #2b1a0e; color: #fff3e0; margin: 0; padding: 20px; text-align: center; }
-  .caixa { max-width: 640px; margin: auto; background: #4e2f17; padding: 24px; border-radius: 16px; }
-  h1, h2 { color: #ffb300; }
-  button { background: #ffb300; border: none; padding: 12px 20px; margin: 6px; border-radius: 10px; font-size: 16px; cursor: pointer; }
-  input { padding: 10px; font-size: 18px; border-radius: 8px; border: none; width: 120px; text-align: center; }
-  .estrelas { font-size: 28px; margin-top: 10px; }
-  .tabuleiro { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 16px 0; }
-  .cova { background: #2b1a0e; border-radius: 50%; padding: 10px; font-size: 18px; border: 2px solid #ffb300; }
-</style>
-</head>
-<body>
-<div class="caixa" id="jogo"></div>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#2b1a0e;color:#fff3e0;margin:0;padding:16px;text-align:center}
+.caixa{max-width:680px;margin:auto;background:#4e2f17;padding:20px;border-radius:16px}
+h1,h2{color:#ffb300;margin-top:0}
+button{display:block;width:100%;max-width:320px;margin:10px auto;background:#ffb300;color:#2b1a0e;border:none;padding:14px;border-radius:10px;font-size:17px;font-weight:bold;cursor:pointer}
+button.sec{background:#8a5a2b;color:#fff3e0}
+input{padding:10px;font-size:18px;border-radius:8px;border:none;width:130px;text-align:center}
+.e{font-size:28px;margin-top:10px}
+.msg{min-height:24px;margin:8px 0;font-weight:bold;color:#ffd54f}
+.tab{display:grid;grid-template-columns:60px repeat(6,1fr) 60px;gap:6px;align-items:center;margin:12px 0}
+.cova{background:#2b1a0e;border:2px solid #ffb300;border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff3e0;cursor:pointer;padding:0;margin:0;width:auto;max-width:none}
+.cova.ativa{background:#6b4423}
+.cova.off{opacity:.45;cursor:default}
+.dep{background:#1b0f06;border:2px solid #ffb300;border-radius:14px;height:100%;min-height:90px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.grade{display:grid;gap:8px;margin:12px 0}
+.cel{aspect-ratio:1;border:2px solid #ffb300;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;background:#2b1a0e}
+.ops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ops button{margin:0;max-width:none;font-size:28px;padding:10px}
+</style></head><body><div class="caixa" id="j"></div>
 <script>
-const fase = {
-  titulo: "Fase 1 (6º ano) - Mancala",
-  texto: "O Mancala é um dos jogos mais antigos do mundo, jogado há muitos séculos em várias regiões da África. O tabuleiro tem covas e sementes, e quem joga precisa contar, dividir e planejar. Cada jogada é um pequeno problema de matemática. Vamos jogar?",
-  perguntas: [
-    { p: "Um tabuleiro de Mancala tem 2 fileiras com 6 covas cada. Quantas covas tem o tabuleiro todo?", r: 12 },
-    { p: "No começo do jogo, cada cova tem 4 sementes. Quantas sementes há no tabuleiro todo?", r: 48 },
-    { p: "Um jogador pega 7 sementes de uma cova e coloca uma em cada cova seguinte. Quantas covas recebem sementes?", r: 7 },
-    { p: "As 48 sementes são divididas igualmente entre 2 jogadores. Quantas sementes fica para cada um?", r: 24 },
-    { p: "Um jogador tem 24 sementes e guarda 1/4 delas num depósito. Quantas sementes ele guarda?", r: 6 },
-    { p: "Desafio: se cada cova tem 4 sementes e o jogador esvazia 3 covas, quantas sementes ele tem na mão?", r: 12 }
-  ]
-};
-let atual = -1, estrelas = 0;
-const jogo = document.getElementById("jogo");
-
-function tabuleiro() {
-  let covas = "";
-  for (let i = 0; i < 12; i++) covas += '<div class="cova">4</div>';
-  return '<div class="tabuleiro">' + covas + '</div>';
+const J=document.getElementById('j');
+function menu(){
+ J.innerHTML='<h1>Quilombo da Matemática</h1><p>Matemática com a cultura africana e afro-brasileira. Escolha uma opção:</p>'+
+ '<button onclick="series()">📚 Quiz por série</button>'+
+ '<button onclick="mancalaMenu()">🎲 Mancala jogável</button>'+
+ '<button onclick="padroes()">🎨 Padrões Africanos</button>'+
+ '<button onclick="autores()">✍️ Autores</button>';
 }
-function inicio() {
-  jogo.innerHTML = '<h1>Quilombo da Matemática</h1><h2>' + fase.titulo + '</h2><p>' + fase.texto + '</p>' + tabuleiro() + '<button onclick="proxima()">Começar</button>';
+const SERIES=[
+{n:'6º ano - Mancala',t:'O Mancala é um dos jogos mais antigos do mundo, jogado há muitos séculos em várias regiões da África. Cada jogada é um pequeno problema de matemática.',q:[['Um tabuleiro de Mancala tem 2 fileiras com 6 covas cada. Quantas covas tem o tabuleiro todo?',12],['No começo, cada cova tem 4 sementes. Quantas sementes há no tabuleiro todo?',48],['As 48 sementes são divididas igualmente entre 2 jogadores. Quantas sementes fica para cada um?',24],['Um jogador tem 24 sementes e guarda 1/4 delas. Quantas sementes ele guarda?',6],['Se cada cova tem 4 sementes e o jogador esvazia 3 covas, quantas sementes ele pega?',12]]},
+{n:'7º ano - Tranças e tecidos',t:'As tranças e os tecidos africanos, como o kente, de Gana, são cheios de simetria, razão e proporção.',q:[['Uma trança tem 3 mechas. Quantas mechas há em 12 tranças?',36],['Um tecido kente tem 40 listras e 25% são amarelas. Quantas listras amarelas há?',10],['Em uma faixa, para cada 3 listras vermelhas há 2 pretas. Se há 15 vermelhas, quantas são pretas?',10],['Uma trancista faz 8 tranças por hora. Quantas faz em 5 horas?',40],['Um tecido de 120 cm repete o padrão a cada 15 cm. Quantas vezes o padrão se repete?',8]]},
+{n:'8º ano - Adinkra e padrões',t:'Os símbolos Adinkra, de Gana, e os fractais da arquitetura africana mostram simetria, rotação e padrões.',q:[['Um símbolo tem x + 7 = 19 traços. Qual é o valor de x?',12],['Um símbolo gira 90 graus quatro vezes. Quantos graus ele girou no total?',360],['Complete a sequência: 3, 6, 12, 24, ... Qual é o próximo número?',48],['Um quadrado tem 4 eixos de simetria e um triângulo equilátero tem 3. Quantos eixos há juntos?',7],['Resolva: 2x - 5 = 17. Qual é o valor de x?',11]]},
+{n:'9º ano - Quilombos e Pitágoras',t:'Os quilombos exigiam planejamento de terras, plantio e construções. Os egípcios já usavam a corda de 13 nós para marcar ângulos retos.',q:[['Uma plantação retangular tem lados de 6 m e 8 m. Quanto mede a diagonal, em metros?',10],['Um triângulo retângulo tem catetos de 5 m e 12 m. Quanto mede a hipotenusa, em metros?',13],['Quanto é 2 elevado a 5?',32],['Três aldeias produziram 20, 30 e 40 sacas de milho. Qual é a média de sacas?',30],['Um quilombo tem 1000 pessoas e 35% são crianças. Quantas são crianças?',350]]}
+];
+let sAt,qAt,est;
+function series(){
+ J.innerHTML='<h2>Escolha a série</h2>'+SERIES.map((x,k)=>'<button onclick="iniciar('+k+')">'+x.n+'</button>').join('')+'<button class="sec" onclick="menu()">Voltar ao menu</button>';
 }
-function proxima() {
-  atual++;
-  if (atual >= fase.perguntas.length) return fim();
-  jogo.innerHTML = '<h2>Pergunta ' + (atual + 1) + ' de ' + fase.perguntas.length + '</h2>' + tabuleiro() + '<p>' + fase.perguntas[atual].p + '</p><input type="number" id="resp"><br><br><button onclick="conferir()">Responder</button><div class="estrelas">' + '⭐'.repeat(estrelas) + '</div>';
+function iniciar(k){
+ sAt=k;qAt=-1;est=0;
+ J.innerHTML='<h2>'+SERIES[k].n+'</h2><p>'+SERIES[k].t+'</p><button onclick="proxima()">Começar</button><button class="sec" onclick="series()">Voltar</button>';
 }
-function conferir() {
-  const v = Number(document.getElementById("resp").value);
-  if (v === fase.perguntas[atual].r) { estrelas++; alert("Acertou! ⭐"); }
-  else { alert("Quase! A resposta era " + fase.perguntas[atual].r); }
-  proxima();
+function proxima(){
+ qAt++;
+ if(qAt>=5){return fimQuiz();}
+ J.innerHTML='<h2>Pergunta '+(qAt+1)+' de 5</h2><p>'+SERIES[sAt].q[qAt][0]+'</p><input type="number" id="resp"><div class="msg" id="fb"></div><button id="bt" onclick="conferir()">Responder</button><div class="e">'+'⭐'.repeat(est)+'</div>';
 }
-function fim() {
-  const passou = estrelas >= 3;
-  jogo.innerHTML = '<h1>Fim da fase</h1><div class="estrelas">' + '⭐'.repeat(estrelas) + '</div><p>' + (passou ? "Parabéns! Você avançou no quilombo!" : "Tente de novo para avançar.") + '</p><button onclick="atual=-1;estrelas=0;inicio()">Jogar de novo</button>';
+function conferir(){
+ const v=Number(document.getElementById('resp').value);
+ const certa=SERIES[sAt].q[qAt][1];
+ const fb=document.getElementById('fb');
+ if(v===certa){est++;fb.textContent='Acertou! ⭐';}else{fb.textContent='Quase! A resposta era '+certa+'.';}
+ const bt=document.getElementById('bt');
+ bt.textContent='Próxima';
+ bt.onclick=proxima;
 }
-inicio();
+function fimQuiz(){
+ J.innerHTML='<h1>Fim da fase</h1><div class="e">'+'⭐'.repeat(est)+'</div><p>'+(est>=3?'Parabéns! Você avançou no quilombo!':'Tente de novo para avançar.')+'</p><button onclick="iniciar(sAt)">Jogar de novo</button><button class="sec" onclick="series()">Outras séries</button><button class="sec" onclick="menu()">Menu</button>';
+}
+let M,vez,modoM,fimM;
+function mancalaMenu(){
+ J.innerHTML='<h2>Mancala</h2><p>Escolha o modo de jogo:</p><button onclick="mIniciar(\'pc\')">Contra o computador</button><button onclick="mIniciar(\'dupla\')">Em dupla, no mesmo celular</button><button class="sec" onclick="mRegras()">Como jogar</button><button class="sec" onclick="menu()">Voltar ao menu</button>';
+}
+function mRegras(){
+ J.innerHTML='<h2>Como jogar</h2><p>Cada jogador tem 6 covas e um depósito. Toque numa cova sua para pegar as sementes e distribuir uma em cada cova seguinte, no sentido anti-horário.</p><p>Se a última semente cair no seu depósito, você joga de novo. Se cair numa cova vazia sua, você captura as sementes da cova da frente.</p><p>O jogo termina quando um lado fica sem sementes. Vence quem tiver mais sementes no depósito.</p><button onclick="mancalaMenu()">Voltar</button>';
+}
+function mIniciar(modo){
+ M=[4,4,4,4,4,4,0,4,4,4,4,4,4,0];vez=1;modoM=modo;fimM=false;
+ mDesenhar('Jogador 1, escolha uma cova.');
+}
+function mNome(j){return (modoM==='pc'&&j===2)?'Computador':'Jogador '+j;}
+function mDesenhar(msg){
+ let topo='',base='';
+ for(let k=5;k>=0;k--){topo+=mCova(7+(5-k));}
+ for(let i=0;i<6;i++){base+=mCova(i);}
+ J.innerHTML='<h2>Mancala</h2><div class="msg" id="mm">'+msg+'</div>'+
+ '<div class="tab"><div class="dep" style="grid-row:1/3">'+M[13]+'</div>'+topo+'<div class="dep" style="grid-row:1/3;grid-column:8">'+M[6]+'</div>'+base+'</div>'+
+ '<p>Jogador 2 (em cima): depósito à esquerda. Jogador 1 (embaixo): depósito à direita.</p>'+
+ '<button class="sec" onclick="mancalaMenu()">Sair do jogo</button>';
+}
+function mCova(i){
+ const dono=i<6?1:2;
+ const ativo=(!fimM&&vez===dono&&M[i]>0&&!(modoM==='pc'&&dono===2));
+ return '<button class="cova'+(ativo?' ativa':' off')+'" '+(ativo?'onclick="mJogar('+i+')"':'')+'>'+M[i]+'</button>';
+}
+function mJogar(i){
+ let sem=M[i];M[i]=0;let p=i;
+ const meuDep=vez===1?6:13,outroDep=vez===1?13:6;
+ while(sem>0){
+  p=(p+1)%14;
+  if(p===outroDep){continue;}
+  M[p]++;sem--;
+ }
+ let msg='';
+ let repete=false;
+ if(p===meuDep){repete=true;msg=mNome(vez)+' jogou de novo!';}
+ else{
+  const meuLado=vez===1?(p>=0&&p<=5):(p>=7&&p<=12);
+  if(meuLado&&M[p]===1){
+   const frente=12-p;
+   if(M[frente]>0){M[meuDep]+=M[frente]+1;M[frente]=0;M[p]=0;msg=mNome(vez)+' capturou sementes!';}
+  }
+ }
+ if(mAcabou()){mFim();return;}
+ if(!repete){vez=vez===1?2:1;msg=msg||('Vez de '+mNome(vez)+'.');}
+ mDesenhar(msg);
+ if(modoM==='pc'&&vez===2){setTimeout(mPc,900);}
+}
+function mAcabou(){
+ const a=M.slice(0,6).every(x=>x===0);
+ const b=M.slice(7,13).every(x=>x===0);
+ return a||b;
+}
+function mFim(){
+ for(let i=0;i<6;i++){M[6]+=M[i];M[i]=0;}
+ for(let i=7;i<13;i++){M[13]+=M[i];M[i]=0;}
+ fimM=true;
+ let r;
+ if(M[6]>M[13]){r='Jogador 1 venceu!';}
+ else if(M[13]>M[6]){r=mNome(2)+' venceu!';}
+ else{r='Empate!';}
+ mDesenhar('Fim de jogo! '+r+' Placar: '+M[6]+' a '+M[13]+'.');
+ J.innerHTML+='<button onclick="mIniciar(modoM)">Jogar de novo</button>';
+}
+function mPc(){
+ if(fimM||vez!==2){return;}
+ let melhor=-1,nota=-1;
+ for(let i=7;i<=12;i++){
+  if(M[i]===0){continue;}
+  let n=Math.random();
+  if((i+M[i])%14===13){n+=10;}
+  const fim=(i+M[i])%14;
+  if(fim>=7&&fim<=12&&M[fim]===0&&M[12-fim]>0){n+=5;}
+  if(n>nota){nota=n;melhor=i;}
+ }
+ if(melhor>=0){mJogar(melhor);}
+}
+const PAD=[
+{d:'Repetição simples',s:['🔶','⬛','🔶','⬛','🔶','?'],o:['⬛','🔶','🔺'],r:'⬛'},
+{d:'Repetição de três',s:['🔺','🔶','⬛','🔺','🔶','?'],o:['🔺','⬛','🔶'],r:'⬛'},
+{d:'Crescimento',s:['⭐','⭐⭐','⭐⭐⭐','?'],o:['⭐⭐','⭐⭐⭐⭐','⭐'],r:'⭐⭐⭐⭐'},
+{d:'Simetria: o padrão é espelhado',s:['🔺','🔶','⬛','🔶','?'],o:['⬛','🔺','🔶'],r:'🔺'},
+{d:'Dois passos e um salto',s:['🔶','🔶','⬛','🔶','🔶','?'],o:['🔶','⬛','🔺'],r:'⬛'}
+];
+let pAt,pEst;
+function padroes(){
+ pAt=-1;pEst=0;
+ J.innerHTML='<h2>Padrões Africanos</h2><p>Os tecidos, as tranças e os símbolos africanos têm padrões que se repetem, crescem ou se espelham. Descubra a regra e complete a sequência!</p><button onclick="pProx()">Começar</button><button class="sec" onclick="menu()">Voltar ao menu</button>';
+}
+function pProx(){
+ pAt++;
+ if(pAt>=PAD.length){return pFim();}
+ const p=PAD[pAt];
+ const cel=p.s.map(function(x){return '<div class="cel">'+x+'</div>';}).join('');
+ const ops=p.o.map(function(x){return '<button onclick="pConf(\''+x+'\')">'+x+'</button>';}).join('');
+ J.innerHTML='<h2>Padrão '+(pAt+1)+' de '+PAD.length+'</h2><p>'+p.d+'</p><div class="grade" style="grid-template-columns:repeat('+p.s.length+',1fr)">'+cel+'</div><p>Qual símbolo completa o padrão?</p><div class="ops">'+ops+'</div><div class="msg" id="pf"></div><div class="e">'+'⭐'.repeat(pEst)+'</div>';
+}
+function pConf(x){
+ const p=PAD[pAt];
+ const pf=document.getElementById('pf');
+ if(x===p.r){pEst++;pf.textContent='Acertou! ⭐';}else{pf.textContent='Quase! A resposta era '+p.r+'.';}
+ document.querySelectorAll('.ops button').forEach(function(b){b.disabled=true;});
+ setTimeout(pProx,1400);
+}
+function pFim(){
+ J.innerHTML='<h1>Fim dos padrões</h1><div class="e">'+'⭐'.repeat(pEst)+'</div><p>Você acertou '+pEst+' de '+PAD.length+' padrões.</p><button onclick="padroes()">Jogar de novo</button><button class="sec" onclick="menu()">Menu</button>';
+}
+const GRUPOS=[
+['6º ano - Mancala e contagem','Grupo a definir'],
+['7º ano - Tranças e tecidos','Grupo a definir'],
+['8º ano - Adinkra e fractais','Grupo a definir'],
+['9º ano - Quilombos e Pitágoras','Grupo a definir']
+];
+function autores(){
+ J.innerHTML='<h2>Autores</h2><p>As perguntas deste jogo são criadas pelos alunos do 9º ano, com orientação do professor de matemática. Projeto ligado ao Aquilombando Bacabal.</p>'+GRUPOS.map(function(g){return '<p><b>'+g[0]+'</b><br>'+g[1]+'</p>';}).join('')+'<button onclick="menu()">Voltar ao menu</button>';
+}
+menu();
 </script>
-</body>
-</html>
+</body></html>
