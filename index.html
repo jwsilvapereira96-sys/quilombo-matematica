@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Quilombo da Matemática</title>
+<html lang=pt-BR><head><meta charset=UTF-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Quilombo da Matemática</title>
 <style>
 *{box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#2b1a0e;color:#fff3e0;margin:0;padding:16px;text-align:center}
@@ -8,174 +8,318 @@ h1,h2{color:#ffb300;margin-top:0}
 button{display:block;width:100%;max-width:320px;margin:10px auto;background:#ffb300;color:#2b1a0e;border:none;padding:14px;border-radius:10px;font-size:17px;font-weight:bold;cursor:pointer}
 button.sec{background:#8a5a2b;color:#fff3e0}
 input{padding:10px;font-size:18px;border-radius:8px;border:none;width:130px;text-align:center}
-.e{font-size:28px;margin-top:10px}
+.cena{background:#2b1a0e;border:2px solid #ffb300;border-radius:14px;padding:14px;margin:12px 0}
+.big{font-size:56px}
+.trilha{display:flex;justify-content:center;align-items:center;gap:6px;margin:10px 0}
+.pt,.ok,.no,.at{width:42px;height:42px;border-radius:50%;border:2px solid #ffb300;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.ok{background:#2e7d32;border-color:#2e7d32}
+.no{background:#8a3b2b;border-color:#8a3b2b}
+.at{background:#ffb300;color:#2b1a0e}
+.lin{width:14px;height:4px;background:#ffb300}
 .msg{min-height:24px;margin:8px 0;font-weight:bold;color:#ffd54f}
-.tab{display:grid;grid-template-columns:60px repeat(6,1fr) 60px;gap:6px;align-items:center;margin:12px 0}
-.cova{background:#2b1a0e;border:2px solid #ffb300;border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff3e0;cursor:pointer;padding:0;margin:0;width:auto;max-width:none}
-.cova.ativa{background:#6b4423}
-.cova.off{opacity:.45;cursor:default}
-.dep{background:#1b0f06;border:2px solid #ffb300;border-radius:14px;height:100%;min-height:90px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.grade{display:grid;gap:8px;margin:12px 0}
-.cel{aspect-ratio:1;border:2px solid #ffb300;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;background:#2b1a0e}
-.ops{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ops button{margin:0;max-width:none;font-size:28px;padding:10px}
-</style></head><body><div class="caixa" id="j"></div>
+.peq{font-size:14px;margin:0 0 10px}
+.yt{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:12px auto;max-width:420px}
+.yc{aspect-ratio:1;background:#2b1a0e;border:2px solid #8a5a2b;border-radius:8px;padding:0;margin:0;max-width:none;width:auto;font-size:26px;display:flex;align-items:center;justify-content:center;color:#fff3e0;cursor:pointer}
+.yc.sel{border-color:#ffb300;background:#6b4423}
+.yc.dst{border-color:#66bb6a;background:#2e4a2e}
+.p1{color:#ffb300}
+.p2{color:#ef5350}
+.res{display:flex;justify-content:center;gap:12px;margin:6px 0;font-size:16px}
+.tec{display:flex;justify-content:center;gap:0;margin:12px auto;max-width:420px;border:3px solid #ffb300;border-radius:8px;overflow:hidden}
+.tec svg{display:block;width:16.66%;height:auto}
+.opt{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.opt button{margin:0;max-width:none;padding:6px;background:#2b1a0e;border:3px solid #ffb300}
+.opt svg{display:block;width:100%;height:auto}
+</style></head><body><div class=caixa id=j></div>
 <script>
 const J=document.getElementById('j');
 function menu(){
- J.innerHTML='<h1>Quilombo da Matemática</h1><p>Matemática com a cultura africana e afro-brasileira. Escolha uma opção:</p>'+
- '<button onclick="series()">📚 Quiz por série</button>'+
- '<button onclick="mancalaMenu()">🎲 Mancala jogável</button>'+
- '<button onclick="padroes()">🎨 Padrões Africanos</button>'+
- '<button onclick="autores()">✍️ Autores</button>';
+ J.innerHTML='<h1>Quilombo da Matemática</h1><p>Matemática com a cultura africana e afro-brasileira. Escolha uma opção:</p><button onclick=trilhas()>🌿 Trilhas de perguntas</button><button onclick=yoteMenu()>♟️ Yote jogável</button><button onclick=padroes()>🧵 Padrões de Tecidos Africanos</button><button onclick=autores()>✍️ Autores</button>';
 }
-const SERIES=[
-{n:'6º ano - Mancala',t:'O Mancala é um dos jogos mais antigos do mundo, jogado há muitos séculos em várias regiões da África. Cada jogada é um pequeno problema de matemática.',q:[['Um tabuleiro de Mancala tem 2 fileiras com 6 covas cada. Quantas covas tem o tabuleiro todo?',12],['No começo, cada cova tem 4 sementes. Quantas sementes há no tabuleiro todo?',48],['As 48 sementes são divididas igualmente entre 2 jogadores. Quantas sementes fica para cada um?',24],['Um jogador tem 24 sementes e guarda 1/4 delas. Quantas sementes ele guarda?',6],['Se cada cova tem 4 sementes e o jogador esvazia 3 covas, quantas sementes ele pega?',12]]},
-{n:'7º ano - Tranças e tecidos',t:'As tranças e os tecidos africanos, como o kente, de Gana, são cheios de simetria, razão e proporção.',q:[['Uma trança tem 3 mechas. Quantas mechas há em 12 tranças?',36],['Um tecido kente tem 40 listras e 25% são amarelas. Quantas listras amarelas há?',10],['Em uma faixa, para cada 3 listras vermelhas há 2 pretas. Se há 15 vermelhas, quantas são pretas?',10],['Uma trancista faz 8 tranças por hora. Quantas faz em 5 horas?',40],['Um tecido de 120 cm repete o padrão a cada 15 cm. Quantas vezes o padrão se repete?',8]]},
-{n:'8º ano - Adinkra e padrões',t:'Os símbolos Adinkra, de Gana, e os fractais da arquitetura africana mostram simetria, rotação e padrões.',q:[['Um símbolo tem x + 7 = 19 traços. Qual é o valor de x?',12],['Um símbolo gira 90 graus quatro vezes. Quantos graus ele girou no total?',360],['Complete a sequência: 3, 6, 12, 24, ... Qual é o próximo número?',48],['Um quadrado tem 4 eixos de simetria e um triângulo equilátero tem 3. Quantos eixos há juntos?',7],['Resolva: 2x - 5 = 17. Qual é o valor de x?',11]]},
-{n:'9º ano - Quilombos e Pitágoras',t:'Os quilombos exigiam planejamento de terras, plantio e construções. Os egípcios já usavam a corda de 13 nós para marcar ângulos retos.',q:[['Uma plantação retangular tem lados de 6 m e 8 m. Quanto mede a diagonal, em metros?',10],['Um triângulo retângulo tem catetos de 5 m e 12 m. Quanto mede a hipotenusa, em metros?',13],['Quanto é 2 elevado a 5?',32],['Três aldeias produziram 20, 30 e 40 sacas de milho. Qual é a média de sacas?',30],['Um quilombo tem 1000 pessoas e 35% são crianças. Quantas são crianças?',350]]}
+const T=[
+{n:'6º ano',t:'Números, divisão e frações',p:[
+['🎲','Clareira do Mancala','Na clareira, as crianças jogam Mancala, um jogo africano com sementes. O tabuleiro tem 2 fileiras de 6 covas, e cada cova começa com 4 sementes.','Quantas sementes há no tabuleiro todo?',48],
+['🌰','Roda do Oware','Em Gana, o jogo se chama Oware. Dois jogadores dividem as 48 sementes igualmente. Uma jogadora capturou 1/4 das sementes dela.','Quantas sementes ela capturou?',6],
+['📖','Casa de Maria Firmina','Maria Firmina dos Reis, escritora nascida em São Luís, no Maranhão, publicou o romance Úrsula em 1859, uma obra contra a escravidão.','Em 2026, quantos anos se passaram desde 1859?',167],
+['🌽','Roça comunitária','No quilombo, as famílias plantam em 5 roças. Cada roça tem 30 pés de mandioca.','Quantos pés de mandioca há nas 5 roças?',150],
+['🍲','Mutirão da farinha','Para o mutirão, os 150 pés de mandioca serão divididos igualmente entre 6 famílias.','Quantos pés fica para cada família?',25]]},
+{n:'7º ano',t:'Razão, proporção e porcentagem',p:[
+['♟️','Jogo de tabuleiro','No jogo Yote, cada jogador começa com 12 peças. Um jogador já perdeu 25% das suas peças.','Quantas peças ele perdeu?',3],
+['🌰','Disputa de sementes','Numa partida, para cada 3 sementes de Ana, Bia tem 2. Ana tem 15 sementes.','Quantas sementes Bia tem?',10],
+['📖','Livro de Carolina','Carolina Maria de Jesus nasceu em 1914 e publicou Quarto de Despejo em 1960, um diário que conta a vida na favela.','Com quantos anos ela publicou o livro?',46],
+['🏘️','Aldeia do quilombo','Uma aldeia tem 200 pessoas, e 35% são crianças.','Quantas crianças moram na aldeia?',70],
+['🌾','Casa de farinha','Uma família produz 12 kg de farinha em 3 dias e mantém o mesmo ritmo.','Quantos kg ela produz em 5 dias?',20]]},
+{n:'8º ano',t:'Equações, padrões e geometria',p:[
+['♟️','Tabuleiro do Yote','O tabuleiro do Yote tem 5 linhas e 6 colunas de casas.','Quantas casas ele tem no total?',30],
+['🧶','Padrão do tecido','Um tecido africano repete o padrão: 3, 6, 12, 24, ...','Qual é o próximo número?',48],
+['📖','Biblioteca de Machado','Machado de Assis nasceu em 1839 e morreu em 1908.','Quantos anos ele viveu?',69],
+['🌽','Roça retangular','A roça do quilombo é um retângulo de 12 m por 8 m.','Qual é a área, em metros quadrados?',96],
+['🪵','Cerca da roça','Para proteger a mesma roça de 12 m por 8 m, a comunidade vai cercar todo o contorno.','Quantos metros de cerca são necessários?',40]]},
+{n:'9º ano',t:'Pitágoras, potências e estatística',p:[
+['♟️','Tabuleiro quadrado','Um tabuleiro de jogo africano é um quadrado de 8 casas por lado.','Quantas casas ele tem no total (8 elevado a 2)?',64],
+['📏','Corda de 13 nós','Os construtores usavam cordas para marcar ângulos retos. Uma roça triangular tem catetos de 6 m e 8 m.','Quanto mede a hipotenusa, em metros?',10],
+['📖','Lei 10.639','A Lei 10.639, de 2003, tornou obrigatório o ensino de história e cultura afro-brasileira nas escolas.','Em 2026, quantos anos se passaram desde 2003?',23],
+['🌽','Colheita das aldeias','Quatro aldeias colheram 20, 30, 40 e 50 sacas de milho.','Qual foi a média de sacas por aldeia?',35],
+['✊','Zumbi dos Palmares','Zumbi nasceu em 1655 e morreu em 20 de novembro de 1695, data que hoje é o Dia da Consciência Negra.','Com quantos anos Zumbi morreu?',40]]}
 ];
-let sAt,qAt,est;
-function series(){
- J.innerHTML='<h2>Escolha a série</h2>'+SERIES.map((x,k)=>'<button onclick="iniciar('+k+')">'+x.n+'</button>').join('')+'<button class="sec" onclick="menu()">Voltar ao menu</button>';
+let tr,pa,sem,res;
+function trilhas(){
+ J.innerHTML='<h2>Escolha a trilha</h2>'+T.map(function(x,k){return '<button onclick=ini('+k+')>'+x.n+'</button><p class=peq>'+x.t+'</p>';}).join('')+'<button class=sec onclick=menu()>Voltar ao menu</button>';
 }
-function iniciar(k){
- sAt=k;qAt=-1;est=0;
- J.innerHTML='<h2>'+SERIES[k].n+'</h2><p>'+SERIES[k].t+'</p><button onclick="proxima()">Começar</button><button class="sec" onclick="series()">Voltar</button>';
-}
-function proxima(){
- qAt++;
- if(qAt>=5){return fimQuiz();}
- J.innerHTML='<h2>Pergunta '+(qAt+1)+' de 5</h2><p>'+SERIES[sAt].q[qAt][0]+'</p><input type="number" id="resp"><div class="msg" id="fb"></div><button id="bt" onclick="conferir()">Responder</button><div class="e">'+'⭐'.repeat(est)+'</div>';
-}
-function conferir(){
- const v=Number(document.getElementById('resp').value);
- const certa=SERIES[sAt].q[qAt][1];
- const fb=document.getElementById('fb');
- if(v===certa){est++;fb.textContent='Acertou! ⭐';}else{fb.textContent='Quase! A resposta era '+certa+'.';}
- const bt=document.getElementById('bt');
- bt.textContent='Próxima';
- bt.onclick=proxima;
-}
-function fimQuiz(){
- J.innerHTML='<h1>Fim da fase</h1><div class="e">'+'⭐'.repeat(est)+'</div><p>'+(est>=3?'Parabéns! Você avançou no quilombo!':'Tente de novo para avançar.')+'</p><button onclick="iniciar(sAt)">Jogar de novo</button><button class="sec" onclick="series()">Outras séries</button><button class="sec" onclick="menu()">Menu</button>';
-}
-let M,vez,modoM,fimM;
-function mancalaMenu(){
- J.innerHTML='<h2>Mancala</h2><p>Escolha o modo de jogo:</p><button onclick="mIniciar(\'pc\')">Contra o computador</button><button onclick="mIniciar(\'dupla\')">Em dupla, no mesmo celular</button><button class="sec" onclick="mRegras()">Como jogar</button><button class="sec" onclick="menu()">Voltar ao menu</button>';
-}
-function mRegras(){
- J.innerHTML='<h2>Como jogar</h2><p>Cada jogador tem 6 covas e um depósito. Toque numa cova sua para pegar as sementes e distribuir uma em cada cova seguinte, no sentido anti-horário.</p><p>Se a última semente cair no seu depósito, você joga de novo. Se cair numa cova vazia sua, você captura as sementes da cova da frente.</p><p>O jogo termina quando um lado fica sem sementes. Vence quem tiver mais sementes no depósito.</p><button onclick="mancalaMenu()">Voltar</button>';
-}
-function mIniciar(modo){
- M=[4,4,4,4,4,4,0,4,4,4,4,4,4,0];vez=1;modoM=modo;fimM=false;
- mDesenhar('Jogador 1, escolha uma cova.');
-}
-function mNome(j){return (modoM==='pc'&&j===2)?'Computador':'Jogador '+j;}
-function mDesenhar(msg){
- let topo='',base='';
- for(let k=5;k>=0;k--){topo+=mCova(7+(5-k));}
- for(let i=0;i<6;i++){base+=mCova(i);}
- J.innerHTML='<h2>Mancala</h2><div class="msg" id="mm">'+msg+'</div>'+
- '<div class="tab"><div class="dep" style="grid-row:1/3">'+M[13]+'</div>'+topo+'<div class="dep" style="grid-row:1/3;grid-column:8">'+M[6]+'</div>'+base+'</div>'+
- '<p>Jogador 2 (em cima): depósito à esquerda. Jogador 1 (embaixo): depósito à direita.</p>'+
- '<button class="sec" onclick="mancalaMenu()">Sair do jogo</button>';
-}
-function mCova(i){
- const dono=i<6?1:2;
- const ativo=(!fimM&&vez===dono&&M[i]>0&&!(modoM==='pc'&&dono===2));
- return '<button class="cova'+(ativo?' ativa':' off')+'" '+(ativo?'onclick="mJogar('+i+')"':'')+'>'+M[i]+'</button>';
-}
-function mJogar(i){
- let sem=M[i];M[i]=0;let p=i;
- const meuDep=vez===1?6:13,outroDep=vez===1?13:6;
- while(sem>0){
-  p=(p+1)%14;
-  if(p===outroDep){continue;}
-  M[p]++;sem--;
+function ini(k){tr=k;pa=0;sem=0;res=[];mostra();}
+function barra(){
+ var h='<div class=trilha>';
+ for(var i=0;i<5;i++){
+  var c='pt',s=String(i+1);
+  if(i<pa){c=res[i]?'ok':'no';s=res[i]?'✔':'✖';}
+  else if(i===pa){c='at';s='🚶';}
+  h+='<div class='+c+'>'+s+'</div>';
+  if(i<4){h+='<div class=lin></div>';}
  }
- let msg='';
- let repete=false;
- if(p===meuDep){repete=true;msg=mNome(vez)+' jogou de novo!';}
- else{
-  const meuLado=vez===1?(p>=0&&p<=5):(p>=7&&p<=12);
-  if(meuLado&&M[p]===1){
-   const frente=12-p;
-   if(M[frente]>0){M[meuDep]+=M[frente]+1;M[frente]=0;M[p]=0;msg=mNome(vez)+' capturou sementes!';}
+ return h+'</div>';
+}
+function mostra(){
+ if(pa>=5){return fim();}
+ var d=T[tr].p[pa];
+ J.innerHTML='<h2>'+T[tr].n+' - Parada '+(pa+1)+' de 5</h2>'+barra()+'<div class=cena><div class=big>'+d[0]+'</div><h2>'+d[1]+'</h2><p>'+d[2]+'</p></div><p><b>'+d[3]+'</b></p><input type=number id=r><div class=msg id=fb></div><button id=bt onclick=conf()>Responder</button><p>Sementes: '+'🌰'.repeat(sem)+'</p>';
+}
+function conf(){
+ var d=T[tr].p[pa];
+ var campo=document.getElementById('r');
+ var fb=document.getElementById('fb');
+ if(campo.value===''){fb.textContent='Digite sua resposta.';return;}
+ var v=Number(campo.value);
+ var bt=document.getElementById('bt');
+ if(v===d[4]){sem++;res[pa]=true;fb.textContent='Acertou! Você ganhou uma semente 🌰';}
+ else{res[pa]=false;fb.textContent='Quase! A resposta era '+d[4]+'.';}
+ bt.textContent='Seguir na trilha';
+ bt.onclick=function(){pa++;mostra();};
+}
+function fim(){
+ var ok=sem>=3;
+ J.innerHTML='<h1>'+(ok?'Você chegou ao quilombo! ✊':'Quase lá!')+'</h1>'+barra()+'<div class=big>🌰</div><p>Você juntou '+sem+' de 5 sementes.</p><p>'+(ok?'Parabéns! Você completou a trilha.':'Tente de novo para chegar ao quilombo.')+'</p><button onclick=ini(tr)>Jogar de novo</button><button class=sec onclick=trilhas()>Outras trilhas</button><button class=sec onclick=menu()>Menu</button>';
+}
+var Y,yv,yr,ym,ys,yf,ypc,yx,yturno;
+function yoteMenu(){
+ J.innerHTML='<h2>Yote</h2><p>Jogo de tabuleiro de capturas, jogado em vários países da África Ocidental.</p><button onclick="yIni(true)">Contra o computador</button><button onclick="yIni(false)">Em dupla, no mesmo celular</button><button class=sec onclick=yRegras()>Como jogar</button><button class=sec onclick=menu()>Voltar ao menu</button>';
+}
+function yRegras(){
+ J.innerHTML='<h2>Como jogar Yote</h2><p>O tabuleiro tem 5 linhas e 6 colunas. Cada jogador tem 12 peças de reserva.</p><p>Na sua vez, faça UMA ação: toque em “Colocar peça” e depois numa casa vazia, ou toque numa peça sua e depois numa casa vazia ao lado, para mover.</p><p>Para capturar, pule por cima de uma peça do adversário que esteja ao lado, caindo na casa vazia logo depois. Você captura essa peça e mais uma do adversário, que será tirada da reserva dele ou do tabuleiro.</p><p>Vence quem deixar o adversário sem peças.</p><button onclick=yoteMenu()>Voltar</button>';
+}
+function yIni(pc){
+ Y=[];for(var i=0;i<30;i++){Y.push(0);}
+ yr=[0,12,12];yv=1;ym=0;yf=false;ypc=pc;ys=-1;yx=false;
+ yDes('Jogador 1, sua vez.');
+}
+function yNome(j){return (ypc&&j===2)?'Computador':'Jogador '+j;}
+function yPecas(j){var n=yr[j];for(var i=0;i<30;i++){if(Y[i]===j){n++;}}return n;}
+function yDes(msg){
+ var h='<h2>Yote</h2><div class=msg>'+msg+'</div><div class=res><span class=p1>● Jogador 1: reserva '+yr[1]+'</span><span class=p2>● '+yNome(2)+': reserva '+yr[2]+'</span></div><div class=yt>';
+ var dst=ys>=0?yDest(ys):[];
+ for(var i=0;i<30;i++){
+  var c='yc';
+  if(i===ys){c+=' sel';}
+  if(dst.indexOf(i)>=0&&!yx){c+=' dst';}
+  var s=Y[i]===1?'<span class=p1>●</span>':(Y[i]===2?'<span class=p2>●</span>':'');
+  h+='<button class="'+c+'" onclick=yClique('+i+')>'+s+'</button>';
+ }
+ h+='</div>';
+ if(!yf){
+  h+='<button onclick=yModoColocar()>'+(ym===1?'Colocando peça: toque numa casa vazia':'Colocar peça da reserva')+'</button>';
+ }
+ h+='<button class=sec onclick=yoteMenu()>Sair do jogo</button>';
+ if(yf){h+='<button onclick=yIni(ypc)>Jogar de novo</button>';}
+ J.innerHTML=h;
+}
+function yModoColocar(){
+ if(yf||(ypc&&yv===2)){return;}
+ if(yx){return;}
+ ym=ym===1?0:1;ys=-1;
+ yDes(ym===1?'Toque numa casa vazia para colocar a peça.':yNome(yv)+', sua vez.');
+}
+function yDest(i){
+ var r=[],l=Math.floor(i/6),c=i%6;
+ var d=[[-1,0],[1,0],[0,-1],[0,1]];
+ for(var k=0;k<4;k++){
+  var nl=l+d[k][0],nc=c+d[k][1];
+  if(nl<0||nl>4||nc<0||nc>5){continue;}
+  var n=nl*6+nc;
+  if(Y[n]===0){r.push(n);}
+ }
+ return r;
+}
+function yCaps(i,j){
+ var r=[],l=Math.floor(i/6),c=i%6,o=j===1?2:1;
+ var d=[[-1,0],[1,0],[0,-1],[0,1]];
+ for(var k=0;k<4;k++){
+  var l1=l+d[k][0],c1=c+d[k][1],l2=l+2*d[k][0],c2=c+2*d[k][1];
+  if(l2<0||l2>4||c2<0||c2>5){continue;}
+  if(Y[l1*6+c1]===o&&Y[l2*6+c2]===0){r.push([l1*6+c1,l2*6+c2]);}
+ }
+ return r;
+}
+function yClique(i){
+ if(yf||yx||(ypc&&yv===2)){return;}
+ if(ym===1){
+  if(Y[i]!==0){return;}
+  Y[i]=yv;yr[yv]--;ym=0;ys=-1;
+  yFimVez('');return;
+ }
+ if(Y[i]===yv){
+  ys=(ys===i)?-1:i;
+  yDes(ys>=0?'Toque numa casa verde para mover, ou numa peça do adversário para saltar e capturar.':yNome(yv)+', sua vez.');
+  return;
+ }
+ if(ys>=0){
+  var cp=yCaps(ys,yv);
+  for(var k=0;k<cp.length;k++){
+   if(cp[k][1]===i){yCapturar(ys,cp[k][0],cp[k][1]);return;}
+  }
+  if(Y[i]===0&&yDest(ys).indexOf(i)>=0){
+   Y[i]=yv;Y[ys]=0;ys=-1;yFimVez('');return;
+  }
+  if(Y[i]===(yv===1?2:1)){
+   for(var m=0;m<cp.length;m++){
+    if(cp[m][0]===i){yCapturar(ys,i,cp[m][1]);return;}
+   }
   }
  }
- if(mAcabou()){mFim();return;}
- if(!repete){vez=vez===1?2:1;msg=msg||('Vez de '+mNome(vez)+'.');}
- mDesenhar(msg);
- if(modoM==='pc'&&vez===2){setTimeout(mPc,900);}
 }
-function mAcabou(){
- const a=M.slice(0,6).every(x=>x===0);
- const b=M.slice(7,13).every(x=>x===0);
- return a||b;
-}
-function mFim(){
- for(let i=0;i<6;i++){M[6]+=M[i];M[i]=0;}
- for(let i=7;i<13;i++){M[13]+=M[i];M[i]=0;}
- fimM=true;
- let r;
- if(M[6]>M[13]){r='Jogador 1 venceu!';}
- else if(M[13]>M[6]){r=mNome(2)+' venceu!';}
- else{r='Empate!';}
- mDesenhar('Fim de jogo! '+r+' Placar: '+M[6]+' a '+M[13]+'.');
- J.innerHTML+='<button onclick="mIniciar(modoM)">Jogar de novo</button>';
-}
-function mPc(){
- if(fimM||vez!==2){return;}
- let melhor=-1,nota=-1;
- for(let i=7;i<=12;i++){
-  if(M[i]===0){continue;}
-  let n=Math.random();
-  if((i+M[i])%14===13){n+=10;}
-  const fim=(i+M[i])%14;
-  if(fim>=7&&fim<=12&&M[fim]===0&&M[12-fim]>0){n+=5;}
-  if(n>nota){nota=n;melhor=i;}
+function yCapturar(de,meio,para){
+ Y[de]=0;Y[meio]=0;Y[para]=yv;ys=-1;
+ var o=yv===1?2:1;
+ if(yr[o]>0){yr[o]--;yFimVez('Captura! '+yNome(yv)+' tirou 2 peças.');return;}
+ var lista=[];
+ for(var i=0;i<30;i++){if(Y[i]===o){lista.push(i);}}
+ if(lista.length>0){
+  if(yv===1&&!ypc||yv===1&&ypc){
+   yx=true;
+   var h2='<h2>Yote</h2><div class=msg>Captura! Escolha mais uma peça do adversário para tirar.</div><div class=yt>';
+   for(var q=0;q<30;q++){
+    var s2=Y[q]===1?'<span class=p1>●</span>':(Y[q]===2?'<span class=p2>●</span>':'');
+    var cl='yc'+(Y[q]===o?' dst':'');
+    h2+='<button class="'+cl+'" onclick=yTirar('+q+')>'+s2+'</button>';
+   }
+   J.innerHTML=h2+'</div>';
+   return;
+  }
+  Y[lista[Math.floor(Math.random()*lista.length)]]=0;
  }
- if(melhor>=0){mJogar(melhor);}
+ yFimVez('Captura! '+yNome(yv)+' tirou 2 peças.');
 }
-const PAD=[
-{d:'Repetição simples',s:['🔶','⬛','🔶','⬛','🔶','?'],o:['⬛','🔶','🔺'],r:'⬛'},
-{d:'Repetição de três',s:['🔺','🔶','⬛','🔺','🔶','?'],o:['🔺','⬛','🔶'],r:'⬛'},
-{d:'Crescimento',s:['⭐','⭐⭐','⭐⭐⭐','?'],o:['⭐⭐','⭐⭐⭐⭐','⭐'],r:'⭐⭐⭐⭐'},
-{d:'Simetria: o padrão é espelhado',s:['🔺','🔶','⬛','🔶','?'],o:['⬛','🔺','🔶'],r:'🔺'},
-{d:'Dois passos e um salto',s:['🔶','🔶','⬛','🔶','🔶','?'],o:['🔶','⬛','🔺'],r:'⬛'}
+function yTirar(q){
+ var o=yv===1?2:1;
+ if(Y[q]!==o){return;}
+ Y[q]=0;yx=false;
+ yFimVez('Captura! '+yNome(yv)+' tirou 2 peças.');
+}
+function yPode(j){
+ if(yr[j]>0){for(var i=0;i<30;i++){if(Y[i]===0){return true;}}}
+ for(var k=0;k<30;k++){
+  if(Y[k]===j){if(yDest(k).length>0||yCaps(k,j).length>0){return true;}}
+ }
+ return false;
+}
+function yFimVez(msg){
+ var o=yv===1?2:1;
+ if(yPecas(o)===0||yPecas(yv)===0){
+  yf=true;
+  var v=yPecas(o)===0?yv:o;
+  yDes('Fim de jogo! '+yNome(v)+' venceu!');return;
+ }
+ yv=o;
+ if(!yPode(yv)){
+  if(!yPode(o===1?2:1)){
+   yf=true;
+   var a=yPecas(1),b=yPecas(2);
+   yDes('Fim de jogo! '+(a>b?'Jogador 1 venceu!':(b>a?yNome(2)+' venceu!':'Empate!'))+' Placar de peças: '+a+' a '+b+'.');return;
+  }
+  yv=yv===1?2:1;
+  yDes(msg+' Sem jogadas possíveis, a vez passou para '+yNome(yv)+'.');
+  if(ypc&&yv===2){setTimeout(yPc,900);}
+  return;
+ }
+ yDes((msg?msg+' ':'')+'Vez de '+yNome(yv)+'.');
+ if(ypc&&yv===2){setTimeout(yPc,900);}
+}
+function yPc(){
+ if(yf||yv!==2){return;}
+ var caps=[];
+ for(var i=0;i<30;i++){
+  if(Y[i]===2){var c=yCaps(i,2);for(var k=0;k<c.length;k++){caps.push([i,c[k][0],c[k][1]]);}}
+ }
+ if(caps.length>0){
+  var s=caps[Math.floor(Math.random()*caps.length)];
+  yv=2;yCapturar(s[0],s[1],s[2]);return;
+ }
+ var mov=[];
+ for(var a=0;a<30;a++){
+  if(Y[a]===2){var d=yDest(a);for(var b=0;b<d.length;b++){mov.push([a,d[b]]);}}
+ }
+ var vazias=[];
+ for(var e=0;e<30;e++){if(Y[e]===0){vazias.push(e);}}
+ if(yr[2]>0&&vazias.length>0&&(mov.length===0||Math.random()<0.6)){
+  var casa=vazias[Math.floor(Math.random()*vazias.length)];
+  Y[casa]=2;yr[2]--;yFimVez('');return;
+ }
+ if(mov.length>0){
+  var m=mov[Math.floor(Math.random()*mov.length)];
+  Y[m[1]]=2;Y[m[0]]=0;yFimVez('');return;
+ }
+ yFimVez('');
+}
+function svgT(cores,tipo){
+ var s='<svg viewBox="0 0 60 120" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="120" fill="'+cores[0]+'"/>';
+ if(tipo===0){s+='<polygon points="30,10 52,60 30,110 8,60" fill="'+cores[1]+'"/><polygon points="30,35 42,60 30,85 18,60" fill="'+cores[2]+'"/>';}
+ if(tipo===1){s+='<rect x="0" y="15" width="60" height="14" fill="'+cores[1]+'"/><rect x="0" y="53" width="60" height="14" fill="'+cores[2]+'"/><rect x="0" y="91" width="60" height="14" fill="'+cores[1]+'"/>';}
+ if(tipo===2){s+='<polygon points="0,120 30,10 60,120" fill="'+cores[1]+'"/><polygon points="18,120 30,60 42,120" fill="'+cores[2]+'"/>';}
+ if(tipo===3){s+='<circle cx="30" cy="60" r="26" fill="'+cores[1]+'"/><circle cx="30" cy="60" r="12" fill="'+cores[2]+'"/>';}
+ if(tipo===4){s+='<rect x="6" y="6" width="48" height="48" fill="'+cores[1]+'"/><rect x="6" y="66" width="48" height="48" fill="'+cores[2]+'"/>';}
+ return s+'</svg>';
+}
+var PAL=[['#c62828','#ffb300','#1b0f06'],['#1b5e20','#ffd54f','#b71c1c'],['#0d47a1','#ffb300','#fff3e0'],['#4a148c','#ffd54f','#2e7d32'],['#e65100','#1b0f06','#fff3e0']];
+var PAD=[
+{d:'Tecido kente (Gana): repetição de dois motivos',s:[0,1,0,1,0],r:1,o:[1,0,2]},
+{d:'Tecido kente: repetição de três motivos',s:[0,2,4,0,2],r:4,o:[2,4,3]},
+{d:'Tecido bogolan (Mali): o padrão é espelhado, igual dos dois lados',s:[3,1,0,1,'?'],r:3,o:[3,0,4]},
+{d:'Tecido kente: dois motivos repetidos em dupla',s:[0,0,3,0,0],r:3,o:[3,0,2]},
+{d:'Tecido africano: três motivos que se repetem',s:[2,3,4,2,3],r:4,o:[4,2,0]}
 ];
-let pAt,pEst;
+var pI,pE,pCor;
 function padroes(){
- pAt=-1;pEst=0;
- J.innerHTML='<h2>Padrões Africanos</h2><p>Os tecidos, as tranças e os símbolos africanos têm padrões que se repetem, crescem ou se espelham. Descubra a regra e complete a sequência!</p><button onclick="pProx()">Começar</button><button class="sec" onclick="menu()">Voltar ao menu</button>';
+ pI=-1;pE=0;
+ J.innerHTML='<h2>Padrões de Tecidos Africanos</h2><p>Os tecidos africanos, como o kente, de Gana, e o bogolan, do Mali, têm estampas que se repetem e se espelham. Descubra a regra e escolha o pedacinho que falta na faixa!</p><button onclick=pProx()>Começar</button><button class=sec onclick=menu()>Voltar ao menu</button>';
 }
 function pProx(){
- pAt++;
- if(pAt>=PAD.length){return pFim();}
- const p=PAD[pAt];
- const cel=p.s.map(function(x){return '<div class="cel">'+x+'</div>';}).join('');
- const ops=p.o.map(function(x){return '<button onclick="pConf(\''+x+'\')">'+x+'</button>';}).join('');
- J.innerHTML='<h2>Padrão '+(pAt+1)+' de '+PAD.length+'</h2><p>'+p.d+'</p><div class="grade" style="grid-template-columns:repeat('+p.s.length+',1fr)">'+cel+'</div><p>Qual símbolo completa o padrão?</p><div class="ops">'+ops+'</div><div class="msg" id="pf"></div><div class="e">'+'⭐'.repeat(pEst)+'</div>';
+ pI++;
+ if(pI>=PAD.length){return pFim();}
+ var p=PAD[pI];
+ pCor=PAL[pI%PAL.length];
+ var f='<div class=tec>';
+ for(var i=0;i<5;i++){
+  var t=p.s[i];
+  f+=(t==='?'?'<svg viewBox="0 0 60 120" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="120" fill="#2b1a0e"/><text x="30" y="75" text-anchor="middle" font-size="50" fill="#ffb300">?</text></svg>':svgT(pCor,t));
+ }
+ f+='<svg viewBox="0 0 60 120" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="120" fill="#2b1a0e"/><text x="30" y="75" text-anchor="middle" font-size="50" fill="#ffb300">?</text></svg></div>';
+ if(p.s.indexOf('?')>=0){f=f.replace(/<svg viewBox="0 0 60 120" xmlns="http:\/\/www.w3.org\/2000\/svg"><rect width="60" height="120" fill="#2b1a0e"\/><text x="30" y="75" text-anchor="middle" font-size="50" fill="#ffb300">\?<\/text><\/svg><\/div>$/,'</div>');}
+ var ops='';
+ var lista=p.o.slice().sort(function(){return Math.random()-0.5;});
+ for(var k=0;k<lista.length;k++){ops+='<button onclick=pConf('+lista[k]+')>'+svgT(pCor,lista[k])+'</button>';}
+ J.innerHTML='<h2>Faixa '+(pI+1)+' de '+PAD.length+'</h2><p>'+p.d+'</p>'+f+'<p><b>Qual pedacinho completa a faixa?</b></p><div class=opt>'+ops+'</div><div class=msg id=pf></div><p>Acertos: '+'🧵'.repeat(pE)+'</p>';
 }
-function pConf(x){
- const p=PAD[pAt];
- const pf=document.getElementById('pf');
- if(x===p.r){pEst++;pf.textContent='Acertou! ⭐';}else{pf.textContent='Quase! A resposta era '+p.r+'.';}
- document.querySelectorAll('.ops button').forEach(function(b){b.disabled=true;});
- setTimeout(pProx,1400);
+function pConf(t){
+ var p=PAD[pI];
+ var pf=document.getElementById('pf');
+ if(t===p.r){pE++;pf.textContent='Acertou! 🧵';}else{pf.textContent='Quase! Observe a regra da faixa e tente de novo na próxima.';}
+ document.querySelectorAll('.opt button').forEach(function(b){b.disabled=true;});
+ setTimeout(pProx,1500);
 }
 function pFim(){
- J.innerHTML='<h1>Fim dos padrões</h1><div class="e">'+'⭐'.repeat(pEst)+'</div><p>Você acertou '+pEst+' de '+PAD.length+' padrões.</p><button onclick="padroes()">Jogar de novo</button><button class="sec" onclick="menu()">Menu</button>';
+ J.innerHTML='<h1>Faixas completas!</h1><div class=big>🧵</div><p>Você acertou '+pE+' de '+PAD.length+' faixas.</p><button onclick=padroes()>Jogar de novo</button><button class=sec onclick=menu()>Menu</button>';
 }
-const GRUPOS=[
-['6º ano - Mancala e contagem','Grupo a definir'],
-['7º ano - Tranças e tecidos','Grupo a definir'],
-['8º ano - Adinkra e fractais','Grupo a definir'],
-['9º ano - Quilombos e Pitágoras','Grupo a definir']
-];
+const GRUPOS=[['6º ano','Grupo a definir'],['7º ano','Grupo a definir'],['8º ano','Grupo a definir'],['9º ano','Grupo a definir']];
 function autores(){
- J.innerHTML='<h2>Autores</h2><p>As perguntas deste jogo são criadas pelos alunos do 9º ano, com orientação do professor de matemática. Projeto ligado ao Aquilombando Bacabal.</p>'+GRUPOS.map(function(g){return '<p><b>'+g[0]+'</b><br>'+g[1]+'</p>';}).join('')+'<button onclick="menu()">Voltar ao menu</button>';
+ J.innerHTML='<h2>Autores</h2><p>As perguntas deste jogo são criadas pelos alunos do 9º ano, com orientação do professor de matemática. Projeto ligado ao Aquilombando Bacabal.</p>'+GRUPOS.map(function(g){return '<p><b>'+g[0]+'</b><br>'+g[1]+'</p>';}).join('')+'<button onclick=menu()>Voltar ao menu</button>';
 }
 menu();
 </script>
